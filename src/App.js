@@ -6,18 +6,60 @@ class App extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      inputCerveja: " "
+      imagemCerveja: "",
+      descricaoCerveja: "",
+      objetoAlimentoCerveja: 
+      [
+        {
+          'codigo': 'macarrao com frango',
+          'nome': 'Appia',
+          'descricao': "Por ser uma cerveja leve, a Colorado Appia vai combinar muito bem comidas mais leves como" +
+          "pernil, saladas, frango, massas e queijo brie.",
+          'imagem': 'https://www.ambev.com.br/sites/g/files/wnfebl5836/files/styles/webp/public/paragraphs/product_size/2022-06/appia-600ml_0.png.webp?itok=4iy4NoHH'
+        }, 
+        {
+          'codigo': 'frutos do mar',
+          'nome': 'Polar',
+          'descricao': 'Produzida a partir de maltes e lúpulos selecionados, Polar Export tem cor clara, processo de baixa fermentação, com aroma, sabor e amargor suaves.',
+          'imagem': 'https://www.ambev.com.br/sites/g/files/wnfebl5836/files/styles/webp/public/paragraphs/product_size/2022-09/Polar%20600ml.png.webp?itok=Vc3d6O2z'
+        },
+        {
+          'codigo': 'salsichao',
+          'nome': 'Franziskaner Hell',
+          'descricao': 'A Franziskaner Hefe Weissbier Hell é uma cerveja de trigo clara, turva, com aroma frutado, lembrando banana e cravo. Espuma abundante, branca e cremosa.Tem um teor alcoólico de 5% e harmoniza com saladas, peixes e frutos do mar.',
+          'imagem': 'https://www.ambev.com.br/sites/g/files/wnfebl5836/files/styles/webp/public/paragraphs/product_size/2022-09/Franziskaner%20Hell%20500ml.png.webp?itok=hVw5dDNp'
+        }
+      ]
     };
+
+  
+    this.arrayCervejas = ['appia', 'brahma', 'skol']
+    this.arrayAlimentos = ['Macarrão com frango', 'Suruba', 'Morte']
+    this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(value) {
-    debugger;
-    console.log(this.state.inputCerveja);
+  handleChange(event) {
+    let texto = event.target.value;  
+    let objetoSelecionado = this.state.objetoAlimentoCerveja.find(x => x.codigo == this.normalizarString(texto))
+
+    if (objetoSelecionado) {
+      this.state.imagemCerveja = objetoSelecionado.imagem;
+      this.state.descricaoCerveja = objetoSelecionado.descricao;  
+    } else {
+      this.state.imagemCerveja =  "";
+      this.state.descricaoCerveja = "";
+    }    
+  
+    document.getElementById('imagem').setAttribute('src', this.state.imagemCerveja)
+    document.getElementById('textoCerveja').innerHTML = this.state.descricaoCerveja;
+  }
+  normalizarString(texto) {
+    return texto.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toLowerCase();
   }
   render() {
     return(
       <html data-wf-domain="o-que-tomar.webflow.io" data-wf-page="634b09489902369e50804f92"
         data-wf-site="634b09489902363a74804f8f" data-wf-status="1">
-
+          
       <head>
         <meta charset="utf-8" />
         <title>O QUE TOMAR</title>
@@ -30,43 +72,38 @@ class App extends React.Component{
         <link href="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/css/o-que-tomar.webflow.e93167c35.css"
           rel="stylesheet" type="text/css" />
         <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-        {/* <script
-          type="text/javascript">WebFont.load({google: {families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic", "Roboto:100,100italic,300,300italic,regular,italic,500,500italic,700,700italic,900,900italic"]}});</script>
-        <script
-          type="text/javascript">!function (o, c) {var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch")}(window, document);</script> */}
         <link href="https://uploads-ssl.webflow.com/img/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <link href="https://uploads-ssl.webflow.com/img/webclip.png" rel="apple-touch-icon" />
       </head>
 
       <body>
-        <div data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
-          role="banner" class="nav w-nav">
-          <div class="nav-container w-container"><a href="#" class="logo w-nav-brand"><img
-                src="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco.png"
-                width="119"
-                srcset="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco-p-500.png 500w, https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco-p-800.png 800w, https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco.png 1497w"
-                sizes="119px" alt="" /></a>
-            <nav role="navigation" class="nav-menu w-nav-menu"><a href="#" class="nav-link w-nav-link">Home</a><a href="#"
-                class="nav-link w-nav-link">Sobre</a><a href="#" class="nav-link w-nav-link">Contato</a></nav>
-            <div class="w-nav-button">
-              <div class="w-icon-nav-menu"></div>
-            </div>
+      <div data-collapse="medium" data-animation="default" data-duration="400" data-easing="ease" data-easing2="ease"
+        role="banner" class="nav w-nav">
+        <div class="nav-container w-container"><a href="#" class="logo w-nav-brand"><img
+              src="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco.png"
+              width="119"
+              srcset="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco-p-500.png 500w, https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco-p-800.png 800w, https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b21cbee4611bc06b8181a_logo%20oq%20tomar%20branco.png 1497w"
+              sizes="119px" alt="" /></a>
+          <nav role="navigation" class="nav-menu w-nav-menu"><a href="#" class="nav-link w-nav-link">Home</a><a href="#"
+              class="nav-link w-nav-link">Sobre</a><a href="#" class="nav-link w-nav-link">Contato</a></nav>
+          <div class="w-nav-button">
+            <div class="w-icon-nav-menu"></div>
           </div>
         </div>
+      </div>
         <div class="hero-section">
           <div class="hero-wrap">
             <div class="hero-left">
               <h1 class="heading-1">O que tomar com...</h1>
-                <input type="text" value={this.state.inputCerveja} onChange={this.handleChange} />
-                <input type="submit" value="Submit" />
+                <input class="button w-button" type="text" value={this.state.inputCerveja} onChange={this.handleChange} />
             </div>
-            <div class="hero-right"><img
-                src="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b0b18a2d14094fbdc390e_appia_600ml.png"
-                width="239"
-                srcset="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b0b18a2d14094fbdc390e_appia_600ml-p-500.png 500w, https://uploads-ssl.webflow.com/634b09489902363a74804f8f/634b0b18a2d14094fbdc390e_appia_600ml.png 540w"
-                sizes="(max-width: 479px) 100vw, 239px" alt="" class="produto" />
-              <p class="caption-1">Por ser uma cerveja leve, a Colorado Appia vai combinar muito bem comidas mais leves como
-                pernil, saladas, frango, massas e queijo brie.</p>
+            <div class="hero-right">
+              <img
+                id="imagem"
+                src={this.state.imagemCerveja}
+                width="100"
+                height="auto"/>
+              <p id="textoCerveja" class="caption-1"></p>
             </div>
           </div>
         </div>
@@ -139,9 +176,6 @@ class App extends React.Component{
         <script src="https://uploads-ssl.webflow.com/634b09489902363a74804f8f/js/webflow.d78855d00.js"
           type="text/javascript"></script>
       </body>
-        <script>
-          $.()
-        </script>
       </html>
   )}
 }
